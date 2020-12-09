@@ -76,6 +76,7 @@ def parse(text):
 		if value:
 			value = int(value[0].replace(',', ''))
 			results += [['HP', value]]
+			results_str += str(f'HP: {value}\n')
 			stat = None
 			continue
 		extract = process.extractOne(line, choices, scorer=fuzz.partial_ratio)
@@ -178,12 +179,13 @@ def rate(results, options={}):
 if __name__ == '__main__':
 	if sys.version_info[0] == 3 and sys.version_info[1] >= 8 and sys.platform.startswith('win'):
 		asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
-	url = 'https://media.discordapp.net/attachments/784707708032253992/785105290814160936/unknown.png'
+	url = 'https://media.discordapp.net/attachments/784707708032253992/784794957055524864/unknown.png'
 	suc, text = asyncio.run(ocr(url))
 	if suc:
 		try:
 			level, results, results_str = parse(text)
 			print(level)
+			print(results)
 			print(results_str)
 			score, grade_score = rate(results, {'Level': level})
 			print(score)
