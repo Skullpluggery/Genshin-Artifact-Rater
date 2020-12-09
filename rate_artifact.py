@@ -171,25 +171,23 @@ def rate(results, options={}):
 		result[1] = value
 		
 	score = (main_score + sub_score) / (main_weight + sub_weight) * 100 if main_weight + sub_weight > 0 else 100
-	main_score = main_score / main_weight * 100 if main_weight > 0 else 100
-	main_score = 100 if main_score > 99 else main_score
-	sub_score = sub_score / sub_weight * 100 if sub_weight > 0 else 100
+	
 	grade_score = grade(score)
-	print(f'Gear Score: {score:.2f}% (main {main_score:.2f}% {main_weight}, sub {sub_score:.2f}% {sub_weight})')
-	print(grade_score)
 	return score, grade_score
 
 if __name__ == '__main__':
 	if sys.version_info[0] == 3 and sys.version_info[1] >= 8 and sys.platform.startswith('win'):
 		asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
-	url = 'https://media.discordapp.net/attachments/761852765843881994/785098986490822707/unknown.png'
+	url = 'https://media.discordapp.net/attachments/784707708032253992/785105290814160936/unknown.png'
 	suc, text = asyncio.run(ocr(url))
 	if suc:
 		try:
 			level, results, results_str = parse(text)
 			print(level)
 			print(results_str)
-			rate(results, {'Level': level})
+			score, grade_score = rate(results, {'Level': level})
+			print(score)
+			print(grade_score)
 		except:
 			print('An error has occured. Please make sure that you\'re providing a correct artifact image (Character Screen -> Artifacts).')
 		

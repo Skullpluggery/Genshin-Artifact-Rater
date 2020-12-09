@@ -12,13 +12,16 @@ bot = commands.Bot(command_prefix='-')
 
 calls = 0
 
+
 @bot.event
 async def on_ready():
-    print(f'{bot.user.name} has connected to {[guild.name for guild in bot.guilds]}')
+    print(
+        f'{bot.user.name} has connected to {[guild.name for guild in bot.guilds]}')
 
 opt_to_key = {'hp': 'HP', 'atk': 'ATK', 'atk%': 'ATK%', 'er': 'Energy Recharge%', 'em': 'Elemental Mastery',
               'phys': 'Physical DMG%', 'cr': 'CRIT Rate%', 'cd': 'CRIT DMG%', 'elem': 'Elemental DMG%',
               'hp%': 'HP%', 'def%': 'DEF%', 'heal': 'Healing%', 'def': 'DEF', 'lvl': 'Level'}
+
 
 @bot.command(name='rate')
 async def rate(ctx):
@@ -49,7 +52,8 @@ async def rate(ctx):
     if not ctx.message.attachments:
         return
     options = ctx.message.content.split()[1:]
-    options = {opt_to_key[option.split('=')[0].lower()] : float(option.split('=')[1]) for option in options}
+    options = {opt_to_key[option.split('=')[0].lower()]: float(
+        option.split('=')[1]) for option in options}
     url = ctx.message.attachments[0].url
     suc, text = await ra.ocr(url)
     global calls
@@ -58,19 +62,21 @@ async def rate(ctx):
     embed = discord.Embed(color=discord.Color.red())
 
     if suc:
-        level, results, results_str  = ra.parse(text)
+        level, results, results_str = ra.parse(text)
         if not('Level' in options.keys()):
             options = {**options, 'Level': level}
         score, grade_score = ra.rate(results, options)
         score_msg = f'**Rating: {score:.2f}% ({grade_score})**'
-        embed.add_field(name=f'Parsed Stats | Level {level}', value=f'{results_str}\n{score_msg}')
+        embed.add_field(
+            name=f'Parsed Stats | Level {level}', value=f'{results_str}\n{score_msg}')
     else:
         error_msg = f'OCR failed. Error: {text}'
         if 'Timed out' in text:
             error_msg += ', please try again in a few minutes'
         embed.add_field(name=f'An error has occured', value=f'{error_msg}')
 
-    embed.set_footer(text=f'Requested by {ctx.message.author}', icon_url=ctx.message.author.avatar_url)
+    embed.set_footer(
+        text=f'Requested by {ctx.message.author}', icon_url=ctx.message.author.avatar_url)
     await ctx.send(embed=embed)
 
 bot.run(TOKEN)
