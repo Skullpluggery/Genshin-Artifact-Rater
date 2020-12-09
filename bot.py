@@ -30,7 +30,8 @@ async def rate(ctx):
 
     -rate <image> [lvl=<level>] [<stat>=<weight> ...]
 
-    If you have any issues or want to use the bot in your private server, contact shrubin#1866 on discord.
+    #1866 on discord.
+    If you have any issues or want to use the bot in your private server, contact shrubin
     Source code available at https://github.com/shrubin/Genshin-Artifact-Rater
 
     Default weights
@@ -62,13 +63,17 @@ async def rate(ctx):
     embed = discord.Embed(color=discord.Color.red())
 
     if suc:
-        level, results, results_str = ra.parse(text)
-        if not('Level' in options.keys()):
-            options = {**options, 'Level': level}
-        score, grade_score = ra.rate(results, options)
-        score_msg = f'**Rating: {score:.2f}% ({grade_score})**'
-        embed.add_field(
-            name=f'Parsed Stats | Level {level}', value=f'{results_str}\n{score_msg}')
+        try:
+            level, results, results_str = ra.parse(text)
+            if not('Level' in options.keys()):
+                options = {**options, 'Level': level}
+            score, grade_score = ra.rate(results, options)
+            score_msg = f'**Rating: {score:.2f}% ({grade_score})**'
+            embed.add_field(
+                name=f'Parsed Stats | Level {level}', value=f'{results_str}\n{score_msg}')
+        except:
+            error_msg = 'An error has occured. Please make sure that you\'re providing a correct artifact image.'
+            embed.add_field(name=f'An error has occured', value=f'{error_msg}')
     else:
         error_msg = f'OCR failed. Error: {text}'
         if 'Timed out' in text:
