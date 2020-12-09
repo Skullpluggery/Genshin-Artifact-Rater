@@ -60,7 +60,8 @@ async def ocr(url):
 def parse(text):
 	stat = None
 	results = []
-	level = None 
+	results_str = ''
+	level = None
 	for line in text.splitlines():
 		if not line or line.lower() == 'in':
 			continue
@@ -96,10 +97,11 @@ def parse(text):
 			else:
 				value = int(value)
 			results += [[stat, value]]
+			results_str += str(f'{stat}: {value}\n')
 			stat = None
 			if len(results) == 5:
 				break
-	return level, results
+	return level, results, results_str
 
 def validate(value, max_stat, percent):
 	while value > max_stat * 1.05:
@@ -175,7 +177,7 @@ def rate(results, options={}):
 	grade_score = grade(score)
 	print(f'Gear Score: {score:.2f}% (main {main_score:.2f}% {main_weight}, sub {sub_score:.2f}% {sub_weight})')
 	print(grade_score)
-	return score, main_score, sub_score, grade_score
+	return score, grade_score
 
 if __name__ == '__main__':
 	if sys.version_info[0] == 3 and sys.version_info[1] >= 8 and sys.platform.startswith('win'):
@@ -184,10 +186,11 @@ if __name__ == '__main__':
 	suc, text = asyncio.run(ocr(url))
 	if suc:
 		try:
-			level, results = parse(text)
+			level, results, results_str = parse(text)
 			print(level)
-			print(results)
+			print(results_str)
 			rate(results, {'Level': level})
 		except:
 			print('An error has occured. Please make sure that you\'re providing a correct artifact image (Character Screen -> Artifacts).')
+		
 		

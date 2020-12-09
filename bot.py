@@ -55,19 +55,21 @@ async def rate(ctx):
     global calls
     calls += 1
     print(f'Calls: {calls}')
+    embed = discord.Embed(color=discord.Color.red())
+
     if suc:
         level, results, results_str  = ra.parse(text)
         if not('Level' in options.keys()):
             options = {**options, 'Level': level}
-        score, main_score, sub_score, grade_score = ra.rate(results, options)
-        score_msg = f'**Rating:** {score:.2f}% ({grade_score})'
+        score, grade_score = ra.rate(results, options)
+        score_msg = f'**Rating: {score:.2f}% ({grade_score})**'
+        embed.add_field(name=f'Parsed Stats | Level {level}', value=f'{results_str}\n{score_msg}')
     else:
-        msg = f'OCR failed. Error: {text}'
+        error_msg = f'OCR failed. Error: {text}'
         if 'Timed out' in text:
-            msg += ', please try again in a few minutes'
+            error_msg += ', please try again in a few minutes'
+        embed.add_field(name=f'An error has occured', value=f'{error_msg}')
 
-    embed = discord.Embed(color=discord.Color.blue())
-    embed.add_field(name=f'Parsed Stats | Level {level}', value=f'{results_str}{score_msg}')
     embed.set_footer(text=f'Requested by {ctx.message.author}', icon_url=ctx.message.author.avatar_url)
     await ctx.send(embed=embed)
 
