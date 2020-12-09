@@ -68,10 +68,10 @@ async def rate(ctx):
             if not('Level' in options.keys()):
                 options = {**options, 'Level': level}
             score, grade_score = ra.rate(results, options)
-            score_msg = f'**Rating: {score:.2f}% ({grade_score})**'
+            score_msg = f'**Rating: {score:.2f}%**\n({grade_score})'
             embed.add_field(
                 name=f'Artifact Level: +{level}',
-                value=f'Traveler! I am done with your request. Here are the results:\n{results_str}\n{score_msg}')
+                value=f'Traveler! I am done with your request. Here are the results:\n\n{results_str}\n{score_msg}')
         except:
             error_msg = 'Traveler! There seems to be a problem with your artifact. Let\'s try another!'
             embed.add_field(name=f'Aaaaaaaa! Oh no!', value=f'{error_msg}')
