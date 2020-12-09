@@ -72,7 +72,7 @@ async def rate(ctx):
             embed.add_field(
                 name=f'Parsed Stats | Level {level}', value=f'{results_str}\n{score_msg}')
         except:
-            error_msg = 'An error has occured. Please make sure that you\'re providing a correct artifact image.'
+            error_msg = 'Please make sure that you\'re providing a correct artifact image.'
             embed.add_field(name=f'An error has occured', value=f'{error_msg}')
     else:
         error_msg = f'OCR failed. Error: {text}'
