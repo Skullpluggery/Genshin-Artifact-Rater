@@ -71,12 +71,12 @@ async def rate(ctx):
             score_msg = f'**Rating: {score:.2f}% ({grade_score})**'
             embed.add_field(
                 name=f'Artifact Level: +{level}',
-                value=f'Traveller! I am done with your request. Here are the results:\n{results_str}\n{score_msg}')
+                value=f'Traveler! I am done with your request. Here are the results:\n{results_str}\n{score_msg}')
         except:
-            error_msg = 'Traveller! There seems to be a problem with your artifact. Let\'s try another!'
+            error_msg = 'Traveler! There seems to be a problem with your artifact. Let\'s try another!'
             embed.add_field(name=f'Aaaaaaaa! Oh no!', value=f'{error_msg}')
     else:
-        error_msg = f'Traveller... Paimon can\'t make any sense of this at all. It says \"{text}\"'
+        error_msg = f'Traveler... Paimon can\'t make any sense of this at all. It says \"{text}\". Maybe you can understand it better?'
         if 'Timed out' in text:
             error_msg += '. Let\'s try again later!'
         embed.add_field(name=f'Ehhhhh... Hehe...', value=f'{error_msg}')
