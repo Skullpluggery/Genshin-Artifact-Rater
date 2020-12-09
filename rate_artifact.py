@@ -126,11 +126,11 @@ def validate(value, max_stat, percent):
 
 def grade(score):
 	if score >= 0 and score <= 50:
-		return 'Poor'
+		return 'Overall, your artifact may not be great in battle, but Paimon still like it!'
 	elif score > 50 and score < 75:
-		return 'Decent'
+		return 'Overall, your artifact is a good one. We should be proud!'
 	else:
-		return 'Excellent'
+		return 'Overall, your artifact is a wonder! Paimon might steal it from you. Hehe...'
 
 def rate(results, options={}):
 	main = True

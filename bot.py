@@ -70,15 +70,16 @@ async def rate(ctx):
             score, grade_score = ra.rate(results, options)
             score_msg = f'**Rating: {score:.2f}% ({grade_score})**'
             embed.add_field(
-                name=f'Parsed Stats | Level {level}', value=f'{results_str}\n{score_msg}')
+                name=f'Artifact Level: +{level}',
+                value=f'Traveller! I am done with your request. Here are the results:\n{results_str}\n{score_msg}')
         except:
-            error_msg = 'Please make sure that you\'re providing a correct artifact image.'
-            embed.add_field(name=f'An error has occured', value=f'{error_msg}')
+            error_msg = 'Traveller! There seems to be a problem with your artifact. Let\'s try another!'
+            embed.add_field(name=f'Aaaaaaaa! Oh no!', value=f'{error_msg}')
     else:
-        error_msg = f'OCR failed. Error: {text}'
+        error_msg = f'Traveller... Paimon can\'t make any sense of this at all. It says \"{text}\"'
         if 'Timed out' in text:
-            error_msg += ', please try again in a few minutes'
-        embed.add_field(name=f'An error has occured', value=f'{error_msg}')
+            error_msg += '. Let\'s try again later!'
+        embed.add_field(name=f'Ehhhhh... Hehe...', value=f'{error_msg}')
 
     embed.set_footer(
         text=f'Requested by {ctx.message.author}', icon_url=ctx.message.author.avatar_url)
