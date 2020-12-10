@@ -60,7 +60,7 @@ async def rate(ctx):
     global calls
     calls += 1
     print(f'Calls: {calls}')
-    embed = discord.Embed(color=discord.Color.red())
+    embed = discord.Embed(color=discord.Color.green())
 
     if suc:
         try:
